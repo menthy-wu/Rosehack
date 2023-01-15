@@ -691,7 +691,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881662957}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d72cfdccbbbf1543aec6ff1fb383aee, type: 3}
   m_Name: 
@@ -705,7 +705,7 @@ MonoBehaviour:
   isCrouch: 0
   isAttacking: 0
   isStunned: 0
-  health: 200
+  health: 500
   knockbackThreshold: 50
   currentKnockback: 0
 --- !u!61 &881662959
@@ -889,7 +889,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881662957}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27c0c7a6a9ba17743b0486c99137c4ca, type: 3}
   m_Name: 
