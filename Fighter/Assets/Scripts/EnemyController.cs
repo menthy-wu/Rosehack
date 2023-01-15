@@ -16,8 +16,7 @@ public class EnemyController : MonoBehaviour
     public int health = 200;
     public int knockbackThreshold = 50;
     public int currentKnockback = 0;
-    // AI Actions { Jump, Right, Left, Attack}
-    public bool[] AIActions = new bool[] { false, false, false, false };
+    public bool[] AIActions = new bool[6];
 
     // Start is called before the first frame update
     void Start()
@@ -41,47 +40,103 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        //AIDecision();
+        AIDecision();
 
-        //Debug.Log(AIActions[0] + " " + AIActions[1] + " " + AIActions[2] + " " + AIActions[3]);
+        bool jumpKey = AIActions[0];
+        bool leftKey = AIActions[1];
+        bool rightKey = AIActions[2];
+        bool crouchKey = AIActions[3];
+        bool attackKey = AIActions[4];
+        bool specialKey = AIActions[5];
 
-        if (AIActions[0] && !isJump && !isStunned)
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce);
-        }
-        if (AIActions[1] && !isJump && !isStunned)
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
-        }
-        else if (AIActions[2] && !isJump && !isStunned)
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
-        }
-        else if (!isJump && !isStunned)
+        if (isAttacking && !isStunned && !isJump)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
         }
 
-        // Hitting enemy with spacebar
-        if (AIActions[3] && !isAttacking && !isStunned)
+        if (crouchKey && !isAttacking && !isJump && !isStunned) // Crouch
         {
-            // Get all colliders in a 1 unit radius in front of the player
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position + transform.right * (facingRight ? 1 : -1), 1f);
-            // Loop through all colliders
-            foreach (Collider2D collider in hitColliders)
+            isCrouch = true;
+        }
+        else
+        {
+            isCrouch = false;
+            if (jumpKey && !isJump && !isStunned && !isAttacking) // Jump
             {
-                // If the collider is the enemy
-                if (collider.gameObject == enemy)
-                {
-                    // Send message to enemy to take damage and direction
-                    int[] parameters = new int[] { 1, facingRight ? 1 : 0 };
-                    collider.gameObject.SendMessage("TakeDamage", parameters);
-                    isAttacking = true;
-                    attackCooldown(1);
-                }
+                // Set velocity to jumpForce
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce);
+            }
+            if (rightKey && !isJump && !isStunned && !isAttacking) // Move right
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            }
+            else if (leftKey && !isJump && !isStunned && !isAttacking) // Move left
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            }
+            else if (!isJump && !isStunned) // Stop moving
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
             }
         }
 
+        // Attacks
+        if (attackKey && isCrouch && !isAttacking && !isJump && !isStunned) // Fast crouch kick
+        {
+            attack(transform.right, 1f, 0.5f, 4, 7);
+            Debug.Log("Fast crouch kick");
+        }
+        else if (attackKey && isJump && !isAttacking && !isStunned) // High kick
+        {
+            attack(transform.right, 1.3f, 0.6f, 7, 15);
+            Debug.Log("High kick");
+        }
+        else if (attackKey && (leftKey || rightKey) && !isJump && !isAttacking && !isStunned) // Side kick
+        {
+            attack(transform.right, 1.5f, 0.8f, 6, 12);
+            Debug.Log("Side kick");
+        }
+        else if (attackKey && !isAttacking && !isStunned) // Jab
+        {
+            attack(transform.right, 1f, 0.3f, 3, 2);
+            Debug.Log("Jab");
+        }
+        else if (specialKey && isCrouch && !isJump && !isAttacking && !isStunned) // Leg sweep
+        {
+            attack(transform.right, 2f, 0.8f, 10, 30);
+            Debug.Log("Leg sweep");
+        }
+        else if (specialKey && (leftKey || rightKey) && isJump && !isAttacking && !isStunned) // Flying side kick
+        {
+            attack(transform.right, 2f, 0.8f, 10, 15);
+            Debug.Log("Flying side kick");
+        }
+        else if (specialKey && (leftKey || rightKey) && !isJump && !isAttacking && !isStunned) // Strong punch
+        {
+            attack(transform.right, 2f, 0.8f, 8, 15);
+            Debug.Log("Strong punch");
+        }
+        else if (specialKey && !isJump && !isAttacking && !isStunned) // Roundhouse
+        {
+            attack(transform.right, 2f, 1f, 20, 51);
+            Debug.Log("Roundhouse");
+        }
+        else if (isCrouch && (leftKey || rightKey) && !isJump && !isAttacking && !isStunned) // Dodge
+        {
+            if (rightKey) // Move right
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * 5, GetComponent<Rigidbody2D>().velocity.y);
+                stun(0.1f);
+                attack(Vector3.zero, 0f, 0.2f, 0, 0);
+            }
+            else if (leftKey) // Move left
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed * 5, GetComponent<Rigidbody2D>().velocity.y);
+                stun(0.1f);
+                attack(Vector3.zero, 0f, 0.2f, 0, 0);
+            }
+            Debug.Log("Dodge");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -107,7 +162,16 @@ public class EnemyController : MonoBehaviour
         int knockbackLevel = parameters[2];
         currentKnockback += (int)(knockbackLevel * (isCrouch ? 0.2f : 1));
         damage = (int)(damage * (isCrouch ? 0.2f : 1));
+        health -= damage;
         Debug.Log("I took " + damage + " damage!");
+        Debug.Log("Knockback level " + currentKnockback);
+
+        if (health <= 0)
+        {
+            health = 0;
+            stun(100000);
+            return;
+        }
 
         if (currentKnockback > knockbackThreshold)
         {
@@ -120,7 +184,6 @@ public class EnemyController : MonoBehaviour
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-knockbackForce.x, knockbackForce.y);
             }
-            isStunned = true;
             stun(1);
         }
     }
@@ -133,7 +196,7 @@ public class EnemyController : MonoBehaviour
         foreach (Collider2D collider in hitColliders)
         {
             // If the collider is the enemy
-            if (collider.gameObject == enemy)
+            if (collider.gameObject == enemy && !collider.isTrigger)
             {
                 // Send message to enemy to take damage and direction
                 int[] parameters = new int[] { damage, facingRight ? 1 : 0, knockbackLevel };
@@ -153,6 +216,7 @@ public class EnemyController : MonoBehaviour
     }
     void stun(float duration)
     {
+        isStunned = true;
         StartCoroutine(stunCoroutine(duration));
     }
     IEnumerator stunCoroutine(float duration)
@@ -163,39 +227,6 @@ public class EnemyController : MonoBehaviour
 
     void AIDecision()
     {
-        // Reset AIActions
-        for (int i = 0; i < AIActions.Length; i++)
-        {
-            AIActions[i] = false;
-        }
 
-        // If enemy is in range
-        if (enemy != null)
-        {
-            // If enemy is above
-            if (enemy.transform.position.y > transform.position.y + 1f)
-            {
-                // Jump
-                AIActions[0] = true;
-            }
-            // If enemy is to the right
-            if (enemy.transform.position.x > transform.position.x)
-            {
-                // Move right
-                AIActions[1] = true;
-            }
-            // If enemy is to the left
-            if (enemy.transform.position.x < transform.position.x)
-            {
-                // Move left
-                AIActions[2] = true;
-            }
-            // If enemy is in range
-            if (Mathf.Abs(enemy.transform.position.x - transform.position.x) < 1.4f)
-            {
-                // Attack
-                AIActions[3] = true;
-            }
-        }
     }
 }
