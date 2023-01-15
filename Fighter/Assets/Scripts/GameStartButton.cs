@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class SelectButton : MonoBehaviour
 {
     [SerializeField]
-    GameObject panel;
-    [SerializeField]
     int hubScene;
 
     [SerializeField]
@@ -27,7 +25,6 @@ public class SelectButton : MonoBehaviour
 
     public void onPress()
     {
-        panel.SetActive(true);
         StartCoroutine(next());
     }
      IEnumerator next()
