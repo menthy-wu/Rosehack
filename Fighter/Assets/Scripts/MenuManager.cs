@@ -58,4 +58,8 @@ public class MenuManager : MonoBehaviour
         Options.SetActive(true);
         Main.SetActive(false);
     }
+    public void mutiplayer()
+    {
+        SceneManager.LoadScene(6);
+    }
 }

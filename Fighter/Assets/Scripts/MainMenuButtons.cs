@@ -44,4 +44,7 @@ public class MainMenuButtons : MonoBehaviour
     public void options(){
         menuManager.GetComponent<MenuManager>().optionspage();
     }
+    public void muti(){
+        menuManager.GetComponent<MenuManager>().mutiplayer();
+    }
 }

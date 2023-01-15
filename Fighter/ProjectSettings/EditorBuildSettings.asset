@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ZeroPlayer.unity
     guid: ccd4c29ac3af86247b7cde283ca9d31e
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer.unity
+    guid: d50abc5fdd82a32478543d713376afd2
   m_configObjects: {}
