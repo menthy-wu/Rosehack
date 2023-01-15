@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class LevelButton : MonoBehaviour
+public class LevelButton : MonoBehaviour, IPointerEnterHandler
 {
-    GameObject StageDisplay;
-    public bool selected;
-    public GameObject otherbutton1;
-    public GameObject otherbutton2;
 
+    [SerializeField]
+    int num;
+    [SerializeField]
+    string stage;
+    GameObject StageDisplay;
+    bool selected;
+    [SerializeField]
+    GameStartButton start;
+
+    soundEffects sound;
     // Start is called before the first frame update
     void Start()
     {
         StageDisplay = GameObject.Find("StageDisplay");
+        sound = GameObject.Find("Sound").GetComponent<soundEffects>();
     }
 
     // Update is called once per frame
@@ -24,9 +32,17 @@ public class LevelButton : MonoBehaviour
     public void onPress(string stage)
     {
         StageDisplay.GetComponent<StageDisplay>().setStage(stage);
-        gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 255);
-        otherbutton1.GetComponent<Image>().color = new Color(100, 100, 100, 255);
-        otherbutton2.GetComponent<Image>().color = new Color(100, 100, 100, 255);
+        start.selectedScene = num;
+        sound.playMusic("buttonClick");
+    }
+
+    public void setSelected(bool select)
+    {
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+
+        sound.playMusic("buttonTrigger");
     }
 
 }

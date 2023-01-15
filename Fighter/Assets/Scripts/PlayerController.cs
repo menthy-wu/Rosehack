@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public bool isCrouch = false;
     public bool isAttacking = false;
     public bool isStunned = false;
-    public int health = 200;
+    public float health = 200f;
     public int knockbackThreshold = 50;
     public int currentKnockback = 0;
     Animator animator;

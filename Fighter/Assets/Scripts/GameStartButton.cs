@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class SelectButton : MonoBehaviour
+
+public class GameStartButton : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField]
     int hubScene;
@@ -13,11 +15,13 @@ public class SelectButton : MonoBehaviour
 
     [SerializeField]
     int bellScene;
-    int selectedScene;
+    public int selectedScene;
+    soundEffects sound;
 
     void Start()
     {
         selectedScene = bellScene;
+        sound = GameObject.Find("Sound").GetComponent<soundEffects>();
     }
 
     // Update is called once per frame
@@ -31,6 +35,11 @@ public class SelectButton : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(selectedScene);
+        sound.playMusic("buttonClick");
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
 
+        sound.playMusic("buttonTrigger");
     }
 }

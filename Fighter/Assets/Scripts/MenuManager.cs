@@ -10,7 +10,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     GameObject Credit;
     [SerializeField]
-    GameObject Option;
+    GameObject Main;
+    [SerializeField]
+    GameObject Options;
 
     // Start is called before the first frame update
     void Start()
@@ -20,16 +22,42 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
     public void changeScene()
     {
         panel.SetActive(true);
-         StartCoroutine(next());
+        StartCoroutine(next());
     }
-     IEnumerator next()
+    IEnumerator next()
     {
-     yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    public void back()
+    {
+        Credit.SetActive(false);
+        Main.SetActive(true);
+        Options.SetActive(false);
+    }
+    public void credit()
+    {
+        Credit.SetActive(true);
+        Main.SetActive(false);
+    }
+    public void autoplay()
+    {
+        panel.SetActive(true);
+        StartCoroutine(auto());
+    }
+    IEnumerator auto()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(5);
+    }
+    public void optionspage()
+    {
+        Options.SetActive(true);
+        Main.SetActive(false);
     }
 }
