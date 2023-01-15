@@ -705,9 +705,10 @@ MonoBehaviour:
   isCrouch: 0
   isAttacking: 0
   isStunned: 0
-  health: 300
+  health: 200
   knockbackThreshold: 50
   currentKnockback: 0
+  defense: 0.4
 --- !u!61 &881662959
 BoxCollider2D:
   m_ObjectHideFlags: 0

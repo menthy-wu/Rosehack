@@ -675,7 +675,6 @@ GameObject:
   - component: {fileID: 881662960}
   - component: {fileID: 881662959}
   - component: {fileID: 881662958}
-  - component: {fileID: 881662964}
   - component: {fileID: 881662965}
   m_Layer: 0
   m_Name: Enemy
@@ -883,36 +882,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &881662964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881662957}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c0c7a6a9ba17743b0486c99137c4ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 20
-  moveSpeed: 5
-  knockbackForce: {x: 5, y: 15}
-  facingRight: 1
-  enemy: {fileID: 1818178039}
-  jumpKey: 273
-  leftKey: 276
-  rightKey: 275
-  crouchKey: 274
-  attackKey: 47
-  specialKey: 303
-  isJump: 0
-  isCrouch: 0
-  isAttacking: 0
-  isStunned: 0
-  health: 200
-  knockbackThreshold: 50
-  currentKnockback: 0
 --- !u!95 &881662965
 Animator:
   serializedVersion: 5
@@ -1446,6 +1415,7 @@ GameObject:
   - component: {fileID: 1818178040}
   - component: {fileID: 1818178045}
   - component: {fileID: 1818178046}
+  - component: {fileID: 1818178047}
   m_Layer: 0
   m_Name: Player
   m_TagString: Entity
@@ -1657,7 +1627,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!95 &1818178046
+--- !u!114 &1818178046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818178039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d72cfdccbbbf1543aec6ff1fb383aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 20
+  moveSpeed: 5
+  knockbackForce: {x: 5, y: 15}
+  facingRight: 1
+  enemy: {fileID: 881662957}
+  isJump: 0
+  isCrouch: 0
+  isAttacking: 0
+  isStunned: 0
+  health: 200
+  knockbackThreshold: 50
+  currentKnockback: 0
+  defense: 1
+--- !u!95 &1818178047
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0

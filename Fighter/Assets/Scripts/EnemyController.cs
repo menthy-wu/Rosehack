@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     public int health = 200;
     public int knockbackThreshold = 50;
     public int currentKnockback = 0;
+    public float defense = 1;
     Animator animator;
     public Dictionary<string, bool> AIActions = new Dictionary<string, bool>()
     {
@@ -149,8 +150,8 @@ public class EnemyController : MonoBehaviour
         }
         else if (specialKey && !isJump && !isAttacking && !isStunned) // Roundhouse
         {
-            delayedAttack(transform.right, 2f, 1f, 20, 51, 0.6f);
-            delayedAttack(transform.right, 2f, 1f, 30, 51, 1.5f);
+            delayedAttack(transform.right, 2f, 1f, 20, 30, 0.6f);
+            delayedAttack(transform.right, 2f, 1f, 30, 30, 1.61f);
             Debug.Log("Roundhouse");
             animator.Play("kick_spin");
         }
@@ -196,7 +197,7 @@ public class EnemyController : MonoBehaviour
         bool facingRight = parameters[1] == 1;
         int knockbackLevel = parameters[2];
         currentKnockback += (int)(knockbackLevel * (isCrouch ? 0.2f : 1));
-        damage = (int)(damage * (isCrouch ? 0.2f : 1));
+        damage = (int)(damage * (isCrouch ? 0.2f : 1) * defense);
         health -= damage;
         Debug.Log("I took " + damage + " damage!");
         Debug.Log("Knockback level " + currentKnockback);
@@ -209,8 +210,14 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        animator.Play("stagger_1");
-
+        if (isCrouch)
+        {
+            animator.Play("block_hold_alternatively_freeze");
+        }
+        else
+        {
+            animator.Play("stagger_1");
+        }
         if (currentKnockback > knockbackThreshold)
         {
             currentKnockback = 0;

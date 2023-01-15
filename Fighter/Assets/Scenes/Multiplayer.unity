@@ -674,7 +674,6 @@ GameObject:
   - component: {fileID: 881662961}
   - component: {fileID: 881662960}
   - component: {fileID: 881662959}
-  - component: {fileID: 881662958}
   - component: {fileID: 881662964}
   - component: {fileID: 881662965}
   m_Layer: 0
@@ -684,31 +683,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &881662958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881662957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d72cfdccbbbf1543aec6ff1fb383aee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 20
-  moveSpeed: 5
-  knockbackForce: {x: 5, y: 15}
-  facingRight: 1
-  enemy: {fileID: 1818178039}
-  isJump: 0
-  isCrouch: 0
-  isAttacking: 0
-  isStunned: 0
-  health: 200
-  knockbackThreshold: 50
-  currentKnockback: 0
-  defense: 0.2
 --- !u!61 &881662959
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -890,7 +864,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881662957}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27c0c7a6a9ba17743b0486c99137c4ca, type: 3}
   m_Name: 

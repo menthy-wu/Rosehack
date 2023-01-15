@@ -137,8 +137,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(specialKey) && !isJump && !isAttacking && !isStunned) // Roundhouse
         {
-            delayedAttack(transform.right, 2f, 1f, 20, 51, 0.6f);
-            delayedAttack(transform.right, 2f, 1f, 30, 51, 1.5f);
+            delayedAttack(transform.right, 2f, 1f, 20, 30, 0.6f);
+            delayedAttack(transform.right, 2f, 1f, 30, 30, 1.61f);
             Debug.Log("Roundhouse");
             animator.Play("kick_spin");
         }
@@ -196,8 +196,14 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        animator.Play("stagger_1");
-
+        if (isCrouch)
+        {
+            animator.Play("block_hold_alternatively_freeze");
+        }
+        else
+        {
+            animator.Play("stagger_1");
+        }
         if (currentKnockback > knockbackThreshold)
         {
             currentKnockback = 0;

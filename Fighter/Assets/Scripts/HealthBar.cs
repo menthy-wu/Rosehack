@@ -16,7 +16,13 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // change width of rectTransform
-        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(targetEntity.GetComponent<PlayerController>().health * 4, 100);
+        if (targetEntity.GetComponent<EnemyController>() != null)
+            // change width of rectTransform
+            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(targetEntity.GetComponent<EnemyController>().health * 4, 100);
+        else
+        {
+            // change width of rectTransform
+            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(targetEntity.GetComponent<PlayerController>().health * 4, 100);
+        }
     }
 }
