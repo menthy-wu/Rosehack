@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         entity2.SetActive(true);
 
         // check if health is 0
-        if (((entity2.GetComponent<EnemyController>() != null && entity2.GetComponent<EnemyController>().health <= 0) || (entity2.GetComponent<EnemyController>() == null && entity2.GetComponent<PlayerController>().health <= 0)) && dialogueNum == 0)
+        if (((entity2.GetComponent<EnemyControllerAgent>() != null && entity2.GetComponent<EnemyControllerAgent>().health <= 0) || (entity2.GetComponent<EnemyControllerAgent>() == null && entity2.GetComponent<PlayerController>().health <= 0)) && dialogueNum == 0)
         {
             dialogueNum = 1;
             allDialogues[1].TriggerDialogue();
