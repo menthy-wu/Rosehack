@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (dialogueNum == 1)
+        if (dialogueNum > 0)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);
         }
@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
         {
             dialogueNum = 1;
             allDialogues[1].TriggerDialogue();
+        }
+        else if (((entity1.GetComponent<EnemyController>() != null && entity1.GetComponent<EnemyController>().health <= 0) || (entity1.GetComponent<EnemyController>() == null && entity1.GetComponent<PlayerController>().health <= 0)) && dialogueNum == 0)
+        {
+            dialogueNum = 2;
+            allDialogues[2].TriggerDialogue();
         }
 
         if (dialogueNum == 0)

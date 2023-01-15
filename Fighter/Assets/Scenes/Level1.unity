@@ -301,6 +301,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &399489443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 399489445}
+  - component: {fileID: 399489444}
+  m_Layer: 0
+  m_Name: Dialogue3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &399489444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399489443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e9c5626b18ae4479bc582678502fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    name: Coach
+    sentences:
+    - Weak puny hooman
+--- !u!4 &399489445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399489443}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.8810053, y: -1.441526, z: 0.88615435}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 682250201}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464012569
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +588,7 @@ Transform:
   m_Children:
   - {fileID: 1837522867}
   - {fileID: 1199106710}
+  - {fileID: 399489445}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -624,6 +673,7 @@ MonoBehaviour:
   health: 200
   knockbackThreshold: 50
   currentKnockback: 0
+  defense: 1
 --- !u!61 &881662959
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -880,6 +930,7 @@ MonoBehaviour:
   allDialogues:
   - {fileID: 1837522868}
   - {fileID: 1199106711}
+  - {fileID: 399489444}
   dialogueManager: {fileID: 388499798}
   dialogueNum: 0
   entity1: {fileID: 1818178039}
@@ -1120,7 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    name: Senko
+    name: Coach
     sentences:
     - Hmph
     - I guess if you must...
@@ -1721,14 +1772,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    name: Senko
+    name: Coach
     sentences:
-    - "It's a beautiful day outside\t"
-    - Birds are singing
-    - Flowers are blooming
-    - On days like these
-    - Kids like you
-    - Should be burning in hell
+    - The FitnessGram Pacer Test is a multistage aerobic capacity test that progressively
+      gets more difficult as it continues.
+    - The 20 meter pacer test will begin in 30 seconds.
+    - Line up at the start.
+    - The running speed starts slowly but gets faster each minute after you hear
+      this signal bodeboop.
+    - A single lap should be completed every time you hear this sound. ding Remember
+      to run in a straight line and run as long as possible.
+    - The second time you fail to complete a lap before the sound, your test is over.
+    - The test will begin on the word start.
+    - On your mark.
+    - Get ready!
+    - Start.
 --- !u!1 &2114341984
 GameObject:
   m_ObjectHideFlags: 0

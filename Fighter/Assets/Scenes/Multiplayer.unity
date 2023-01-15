@@ -624,6 +624,7 @@ Transform:
   m_Children:
   - {fileID: 1837522867}
   - {fileID: 1199106710}
+  - {fileID: 1857269644}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -939,6 +940,7 @@ MonoBehaviour:
   allDialogues:
   - {fileID: 1837522868}
   - {fileID: 1199106711}
+  - {fileID: 1857269643}
   dialogueManager: {fileID: 388499798}
   dialogueNum: 0
   entity1: {fileID: 1818178039}
@@ -1097,8 +1099,8 @@ MonoBehaviour:
   dialogue:
     name: Senko
     sentences:
-    - Hmph
-    - I guess if you must...
+    - It may be the end of the match, but not the end of the battle
+    - Keep your spirits up, and continue to forge onwards
 --- !u!1 &1205055666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,12 +1700,57 @@ MonoBehaviour:
   dialogue:
     name: Senko
     sentences:
-    - "It's a beautiful day outside\t"
-    - Birds are singing
-    - Flowers are blooming
-    - On days like these
-    - Kids like you
-    - Should be burning in hell
+    - It's a battle of will
+    - Who will triumph here?
+--- !u!1 &1857269642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857269644}
+  - component: {fileID: 1857269643}
+  m_Layer: 0
+  m_Name: Dialogue3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1857269643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857269642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e9c5626b18ae4479bc582678502fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    name: Senko
+    sentences:
+    - It may be the end of the match, but not the end of the battle
+    - Keep your spirits up, and continue to forge onwards
+--- !u!4 &1857269644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857269642}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.8810053, y: -1.441526, z: 0.88615435}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 682250201}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2114341984
 GameObject:
   m_ObjectHideFlags: 0
