@@ -33,16 +33,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0)
+        {
+            animator.Play("die_loop");
+            return;
+        }
         // face enemy
         if (enemy != null)
         {
             if (enemy.transform.position.x > transform.position.x)
             {
                 facingRight = true;
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
             }
             else
             {
                 facingRight = false;
+                GetComponentInChildren<SpriteRenderer>().flipX = true;
             }
         }
 
@@ -51,7 +58,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
         }
 
-        if (Input.GetKey(crouchKey) && !isAttacking && !isJump && !isStunned) // Crouch
+        if (Input.GetKey(crouchKey) && !isJump && !isStunned) // Crouch
         {
             crouch();
             isCrouch = true;
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce);
                 animator.Play("jump");
             }
-            if (Input.GetKey(rightKey) && !isJump && !isStunned && !isAttacking) // Move right
+            else if (Input.GetKey(rightKey) && !isJump && !isStunned && !isAttacking) // Move right
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
                 animator.Play("walk_forward");
@@ -78,8 +85,10 @@ public class PlayerController : MonoBehaviour
             else if (!isJump && !isStunned) // Stop moving
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
-                if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                {animator.Play("idle");}
+                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {
+                    animator.Play("idle");
+                }
             }
         }
 
@@ -98,7 +107,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(attackKey) && (Input.GetKey(leftKey) || Input.GetKey(rightKey)) && !isJump && !isAttacking && !isStunned) // Side kick
         {
-            attack(transform.right, 1.5f, 0.8f, 6, 12);
+            delayedAttack(transform.right, 1.5f, 0.8f, 6, 12, 0.5f);
             Debug.Log("Side kick");
             animator.Play("kick");
         }
@@ -128,7 +137,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(specialKey) && !isJump && !isAttacking && !isStunned) // Roundhouse
         {
-            attack(transform.right, 2f, 1f, 20, 51);
+            delayedAttack(transform.right, 2f, 1f, 20, 51, 0.6f);
+            delayedAttack(transform.right, 2f, 1f, 30, 51, 1.5f);
             Debug.Log("Roundhouse");
             animator.Play("kick_spin");
         }
@@ -178,14 +188,15 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         Debug.Log("I took " + damage + " damage!");
         Debug.Log("Knockback level " + currentKnockback);
-        animator.Play("idle_taunt");
-        
+
         if (health <= 0)
         {
             health = 0;
             stun(100000);
             return;
         }
+
+        animator.Play("stagger_1");
 
         if (currentKnockback > knockbackThreshold)
         {
@@ -202,6 +213,16 @@ public class PlayerController : MonoBehaviour
             }
             stun(1);
         }
+    }
+    void delayedAttack(Vector3 offset, float radius, float cooldown, int damage, int knockbackLevel, float delay)
+    {
+        isAttacking = true;
+        StartCoroutine(delayedAttackCoroutine(offset, radius, cooldown, damage, knockbackLevel, delay));
+    }
+    IEnumerator delayedAttackCoroutine(Vector3 offset, float radius, float cooldown, int damage, int knockbackLevel, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        attack(offset, radius, cooldown, damage, knockbackLevel);
     }
     void attack(Vector3 offset, float radius, float cooldown, int damage, int knockbackLevel)
     {
@@ -242,10 +263,11 @@ public class PlayerController : MonoBehaviour
     }
     void crouch()
     {
-        if(!isCrouch)
-        {animator.Play("crouch_start");}
-        else{
-            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (!isCrouch)
+        { animator.Play("crouch_start"); }
+        else
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 animator.Play("crouch_idle");
                 return;

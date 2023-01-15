@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject entity1;
     public GameObject entity2;
     public string nextScene = "LevelSelection";
+    public GameObject viewCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
     {
         if (dialogueManager.isTalking)
         {
+            // Reset camera position and fov
+            viewCamera.transform.position = new Vector3(0, 0, -10);
+            viewCamera.GetComponent<Camera>().orthographicSize = 5;
             if (Input.anyKeyDown)
             {
                 dialogueManager.DisplayNextSentence();
@@ -45,6 +49,13 @@ public class GameManager : MonoBehaviour
         {
             dialogueNum = 1;
             allDialogues[1].TriggerDialogue();
+        }
+
+        if (dialogueNum == 0)
+        {
+            // set camera to zoom in and keep both entities in view
+            viewCamera.transform.position = new Vector3((entity1.transform.position.x + entity2.transform.position.x) / 2, -2 + Mathf.Abs(entity1.transform.position.x - entity2.transform.position.x) / 4, -10);
+            viewCamera.GetComponent<Camera>().orthographicSize = Mathf.Max(Mathf.Abs(entity1.transform.position.x - entity2.transform.position.x), Mathf.Abs(entity1.transform.position.y - entity2.transform.position.y)) / 4 + 2;
         }
     }
 }
