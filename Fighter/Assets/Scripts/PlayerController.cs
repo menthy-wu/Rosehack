@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (isAttacking && !isStunned)
+        if (isAttacking && !isStunned && !isJump)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
         }
