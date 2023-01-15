@@ -7,7 +7,15 @@ public class StageDisplay : MonoBehaviour
     GameObject hub;
     GameObject src;
     GameObject bell;
+    [SerializeField]
+    GameObject hubButton;
+    [SerializeField]
+    GameObject srcButton;
+    [SerializeField]
+    GameObject bellButton;
+
     string currentStage = "bell";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +28,8 @@ public class StageDisplay : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() { }
 
-    }
     public void setStage(string stage)
     {
         if (stage == "hub")
@@ -32,22 +38,29 @@ public class StageDisplay : MonoBehaviour
             src.SetActive(false);
             bell.SetActive(false);
             currentStage = "hub";
+            hubButton.GetComponent<LevelButton>().setSelected(true);
+            srcButton.GetComponent<LevelButton>().setSelected(false);
+            bellButton.GetComponent<LevelButton>().setSelected(false);
         }
         else if (stage == "src")
         {
-
             src.SetActive(true);
             hub.SetActive(false);
             bell.SetActive(false);
             currentStage = "src";
+            hubButton.GetComponent<LevelButton>().setSelected(false);
+            srcButton.GetComponent<LevelButton>().setSelected(true);
+            bellButton.GetComponent<LevelButton>().setSelected(false);
         }
         else if (stage == "bell")
         {
-
-            src.SetActive(true);
+            bell.SetActive(true);
             currentStage = "bell";
-            bell.SetActive(false);
+            src.SetActive(false);
             hub.SetActive(false);
+            hubButton.GetComponent<LevelButton>().setSelected(false);
+            srcButton.GetComponent<LevelButton>().setSelected(false);
+            bellButton.GetComponent<LevelButton>().setSelected(false);
         }
     }
 }
