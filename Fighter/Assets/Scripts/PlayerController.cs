@@ -22,11 +22,12 @@ public class PlayerController : MonoBehaviour
     public int health = 200;
     public int knockbackThreshold = 50;
     public int currentKnockback = 0;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(crouchKey) && !isAttacking && !isJump && !isStunned) // Crouch
         {
+            crouch();
             isCrouch = true;
         }
         else
@@ -61,18 +63,23 @@ public class PlayerController : MonoBehaviour
             {
                 // Set velocity to jumpForce
                 GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce);
+                animator.Play("jump");
             }
             if (Input.GetKey(rightKey) && !isJump && !isStunned && !isAttacking) // Move right
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+                animator.Play("walk_forward");
             }
             else if (Input.GetKey(leftKey) && !isJump && !isStunned && !isAttacking) // Move left
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+                animator.Play("walk_backward");
             }
             else if (!isJump && !isStunned) // Stop moving
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+                if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {animator.Play("idle");}
             }
         }
 
@@ -81,41 +88,49 @@ public class PlayerController : MonoBehaviour
         {
             attack(transform.right, 1f, 0.5f, 4, 7);
             Debug.Log("Fast crouch kick");
+            animator.Play("crouch_kick");
         }
         else if (Input.GetKeyDown(attackKey) && isJump && !isAttacking && !isStunned) // High kick
         {
             attack(transform.right, 1.3f, 0.6f, 7, 15);
             Debug.Log("High kick");
+            animator.Play("high_kick");
         }
         else if (Input.GetKeyDown(attackKey) && (Input.GetKey(leftKey) || Input.GetKey(rightKey)) && !isJump && !isAttacking && !isStunned) // Side kick
         {
             attack(transform.right, 1.5f, 0.8f, 6, 12);
             Debug.Log("Side kick");
+            animator.Play("kick");
         }
         else if (Input.GetKeyDown(attackKey) && !isAttacking && !isStunned) // Jab
         {
             attack(transform.right, 1f, 0.3f, 3, 2);
             Debug.Log("Jab");
+            animator.Play("punch_light");
         }
         else if (Input.GetKeyDown(specialKey) && isCrouch && !isJump && !isAttacking && !isStunned) // Leg sweep
         {
             attack(transform.right, 2f, 0.8f, 10, 30);
             Debug.Log("Leg sweep");
+            animator.Play("crouch_end_kick_included");
         }
         else if (Input.GetKeyDown(specialKey) && (Input.GetKey(leftKey) || Input.GetKey(rightKey)) && isJump && !isAttacking && !isStunned) // Flying side kick
         {
             attack(transform.right, 2f, 0.8f, 10, 15);
             Debug.Log("Flying side kick");
+            animator.Play("kick");
         }
         else if (Input.GetKeyDown(specialKey) && (Input.GetKey(leftKey) || Input.GetKey(rightKey)) && !isJump && !isAttacking && !isStunned) // Strong punch
         {
             attack(transform.right, 2f, 0.8f, 8, 15);
             Debug.Log("Strong punch");
+            animator.Play("punch_heavier");
         }
         else if (Input.GetKeyDown(specialKey) && !isJump && !isAttacking && !isStunned) // Roundhouse
         {
             attack(transform.right, 2f, 1f, 20, 51);
             Debug.Log("Roundhouse");
+            animator.Play("kick_spin");
         }
         else if (isCrouch && (Input.GetKey(leftKey) || Input.GetKey(rightKey)) && !isJump && !isAttacking && !isStunned) // Dodge
         {
@@ -124,12 +139,14 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * 5, GetComponent<Rigidbody2D>().velocity.y);
                 stun(0.1f);
                 attack(Vector3.zero, 0f, 0.2f, 0, 0);
+                animator.Play("crouch_kick");
             }
             else if (Input.GetKey(leftKey)) // Move left
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed * 5, GetComponent<Rigidbody2D>().velocity.y);
                 stun(0.1f);
                 attack(Vector3.zero, 0f, 0.2f, 0, 0);
+                animator.Play("crouch_kick");
             }
             Debug.Log("Dodge");
         }
@@ -161,7 +178,8 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         Debug.Log("I took " + damage + " damage!");
         Debug.Log("Knockback level " + currentKnockback);
-
+        animator.Play("idle_taunt");
+        
         if (health <= 0)
         {
             health = 0;
@@ -175,10 +193,12 @@ public class PlayerController : MonoBehaviour
             if (facingRight)
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(knockbackForce.x, knockbackForce.y);
+                animator.Play("die_start");
             }
             else
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-knockbackForce.x, knockbackForce.y);
+                animator.Play("die_start");
             }
             stun(1);
         }
@@ -219,5 +239,17 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         isStunned = false;
+    }
+    void crouch()
+    {
+        if(!isCrouch)
+        {animator.Play("crouch_start");}
+        else{
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                animator.Play("crouch_idle");
+                return;
+            }
+        }
     }
 }
