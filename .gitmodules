@@ -1,0 +1,3 @@
+[submodule "rumble-web"]
+	path = rumble-web
+	url = https://github.com/NovaSagittarii/rumble-web
