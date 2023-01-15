@@ -16,7 +16,15 @@ public class EnemyController : MonoBehaviour
     public int health = 200;
     public int knockbackThreshold = 50;
     public int currentKnockback = 0;
-    public bool[] AIActions = new bool[6];
+    public Dictionary<string, bool> AIActions = new Dictionary<string, bool>()
+    {
+        {"jump", false},
+        {"left", false},
+        {"right", false},
+        {"crouch", false},
+        {"attack", false},
+        {"special", false}
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -42,12 +50,12 @@ public class EnemyController : MonoBehaviour
 
         AIDecision();
 
-        bool jumpKey = AIActions[0];
-        bool leftKey = AIActions[1];
-        bool rightKey = AIActions[2];
-        bool crouchKey = AIActions[3];
-        bool attackKey = AIActions[4];
-        bool specialKey = AIActions[5];
+        bool jumpKey = AIActions["jump"];
+        bool leftKey = AIActions["left"];
+        bool rightKey = AIActions["right"];
+        bool crouchKey = AIActions["crouch"];
+        bool attackKey = AIActions["attack"];
+        bool specialKey = AIActions["special"];
 
         if (isAttacking && !isStunned && !isJump)
         {
@@ -227,6 +235,53 @@ public class EnemyController : MonoBehaviour
 
     void AIDecision()
     {
+        // Move towards the player
+        if (transform.position.x < enemy.transform.position.x)
+        {
+            AIActions["right"] = true;
+            AIActions["left"] = false;
+        }
+        else
+        {
+            AIActions["right"] = false;
+            AIActions["left"] = true;
+        }
+        // Jump if the player is above
+        if (transform.position.y < enemy.transform.position.y)
+        {
+            AIActions["jump"] = true;
+        }
+        else
+        {
+            AIActions["jump"] = false;
+        }
+        // Crouch if the player is below
+        if (transform.position.y > enemy.transform.position.y)
+        {
+            AIActions["crouch"] = true;
+        }
+        else
+        {
+            AIActions["crouch"] = false;
+        }
+        // Attack if the player is in range
+        if (Mathf.Abs(transform.position.x - enemy.transform.position.x) < 1.5f)
+        {
+            AIActions["attack"] = true;
+        }
+        else
+        {
+            AIActions["attack"] = false;
+        }
+        // Special attack if the player is in range
+        if (Mathf.Abs(transform.position.x - enemy.transform.position.x) < 2.0f)
+        {
+            AIActions["special"] = true;
+        }
+        else
+        {
+            AIActions["special"] = false;
+        }
 
     }
 }
