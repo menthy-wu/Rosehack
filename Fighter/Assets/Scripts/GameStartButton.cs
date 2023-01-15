@@ -25,6 +25,12 @@ public class SelectButton : MonoBehaviour
 
     public void onPress()
     {
+        StartCoroutine(next());
+    }
+    IEnumerator next()
+    {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(selectedScene);
+
     }
 }
