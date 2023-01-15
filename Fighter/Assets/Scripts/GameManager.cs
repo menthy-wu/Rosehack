@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        entity1.SetActive(false);
+        entity2.SetActive(false);
+
         allDialogues[dialogueNum].TriggerDialogue();
     }
 
@@ -27,5 +30,8 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
+
+        entity1.SetActive(true);
+        entity2.SetActive(true);
     }
 }
