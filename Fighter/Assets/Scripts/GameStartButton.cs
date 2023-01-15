@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SelectButton : MonoBehaviour
+public class GameStartButton : MonoBehaviour
 {
     [SerializeField]
     int hubScene;
@@ -13,7 +13,7 @@ public class SelectButton : MonoBehaviour
 
     [SerializeField]
     int bellScene;
-    int selectedScene;
+    public int selectedScene;
 
     void Start()
     {

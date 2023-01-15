@@ -7,24 +7,18 @@ public class LevelButton : MonoBehaviour
 {
     
     [SerializeField]
+    int num;
+    [SerializeField]
     string stage;
     GameObject StageDisplay;
     bool selected;
+    [SerializeField]
+    GameStartButton start;
 
     // Start is called before the first frame update
     void Start()
     {
         StageDisplay = GameObject.Find("StageDisplay");
-        if (stage == "bell")
-        {
-            selected = true;
-            GetComponent<Image>().color = new Color(255, 255, 255, 255);
-        }
-        else
-        {
-            selected = false;
-            GetComponent<Image>().color = new Color(100, 100, 100, 255);
-        }
     }
 
     // Update is called once per frame
@@ -35,19 +29,10 @@ public class LevelButton : MonoBehaviour
     public void onPress()
     {
         StageDisplay.GetComponent<StageDisplay>().setStage(stage);
+        start.selectedScene = num;
     }
 
     public void setSelected(bool select)
     {
-        selected = select;
-        if(select)
-        {
-            
-            // GetComponent<Image>().color = new Color(255, 255, 255, 255);
-        }
-        else{
-            
-            // GetComponent<Image>().color = new Color(100, 100, 100, 255);
-        }
     }
 }
