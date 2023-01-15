@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class LevelButton : MonoBehaviour
+public class LevelButton : MonoBehaviour, IPointerEnterHandler
 {
     
     [SerializeField]
@@ -15,10 +16,12 @@ public class LevelButton : MonoBehaviour
     [SerializeField]
     GameStartButton start;
 
+    soundEffects sound;
     // Start is called before the first frame update
     void Start()
     {
         StageDisplay = GameObject.Find("StageDisplay");
+        sound = GameObject.Find("Sound").GetComponent<soundEffects>();
     }
 
     // Update is called once per frame
@@ -30,9 +33,16 @@ public class LevelButton : MonoBehaviour
     {
         StageDisplay.GetComponent<StageDisplay>().setStage(stage);
         start.selectedScene = num;
+        sound.playMusic("buttonClick");
     }
 
     public void setSelected(bool select)
     {
+    } 
+    public void OnPointerEnter(PointerEventData eventData)
+    {  
+        
+        sound.playMusic("buttonTrigger");
     }
+    
 }

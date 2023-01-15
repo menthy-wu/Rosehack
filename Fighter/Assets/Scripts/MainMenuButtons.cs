@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class MainMenuButtons : MonoBehaviour
 {
     GameObject menuManager;
+    soundEffects sound;
     // Start is called before the first frame update
     void Start()
     {
         menuManager = GameObject.Find("MenuManager");
+        sound = GameObject.Find("Sound").GetComponent<soundEffects>();
     }
 
     // Update is called once per frame
@@ -36,5 +38,10 @@ public class MainMenuButtons : MonoBehaviour
     public void backtomenu()
     {
         SceneManager.LoadScene(0);
+        sound.playMusic("buttonClick");
+
+    }
+    public void options(){
+        menuManager.GetComponent<MenuManager>().optionspage();
     }
 }
