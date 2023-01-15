@@ -32,35 +32,27 @@ public class StageDisplay : MonoBehaviour
 
     public void setStage(string stage)
     {
+        Debug.Log(stage);
         if (stage == "hub")
         {
+            currentStage = "hub";
             hub.SetActive(true);
             src.SetActive(false);
             bell.SetActive(false);
-            currentStage = "hub";
-            hubButton.GetComponent<LevelButton>().setSelected(true);
-            srcButton.GetComponent<LevelButton>().setSelected(false);
-            bellButton.GetComponent<LevelButton>().setSelected(false);
         }
         else if (stage == "src")
         {
+            currentStage = "src";
             src.SetActive(true);
             hub.SetActive(false);
             bell.SetActive(false);
-            currentStage = "src";
-            hubButton.GetComponent<LevelButton>().setSelected(false);
-            srcButton.GetComponent<LevelButton>().setSelected(true);
-            bellButton.GetComponent<LevelButton>().setSelected(false);
         }
         else if (stage == "bell")
         {
-            bell.SetActive(true);
             currentStage = "bell";
+            bell.SetActive(true);
             src.SetActive(false);
             hub.SetActive(false);
-            hubButton.GetComponent<LevelButton>().setSelected(false);
-            srcButton.GetComponent<LevelButton>().setSelected(false);
-            bellButton.GetComponent<LevelButton>().setSelected(false);
         }
     }
 }
