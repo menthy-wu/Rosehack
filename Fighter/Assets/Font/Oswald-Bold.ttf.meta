@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 77e24852c8c44c041b44a1ab986acd66
+guid: 7b57d659b36b6d54b9fb72470af9c98a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Invasion2000
+  - Oswald
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
